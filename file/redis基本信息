@@ -31,3 +31,8 @@ redis.conf 每秒:appendfsync=everysec  数据变更:appendfsync=always
 fork一条线程重写内存中的数据,不独去旧的aof文件
 
 若同时开启,恢复先aof.
+
+redis事务:
+1.事务中的命令都会被序列化,按顺序执行
+2.在提交命令之前,命令都不会实际执行
+3.不存在原子性，其中一个失败,不会回滚,其他的命令继续执行
