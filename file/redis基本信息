@@ -1,0 +1,33 @@
+1.非关系数据库 key/value
+特点:
+1.支持数据持久化,将数据保存到网盘,重启时加载
+2.提供多种数据类型:key-value,list,set,zset(有序集合),hash(类似于Map)
+3.支持数据备份即master-slave模式数据备份
+
+redis基本操作:
+set 键名 键值 设置键值对
+keys * 查看所有的键名
+exits 建名 判断某个键名是否存在
+move 键名  数据库名  移动键值对
+expire key 秒 设置超时时间
+ttl key 查看还有多久过期
+
+redis持久化
+1.RDB 在指定时间内将内存中的数据集快照写入磁盘,恢复时,直接将数据写入到内存
+  通过fork(复制一个主线程,和原线程一样)一个子线程将数据写入到临时文件中,结束替换之前的持久化文件
+
+  缺点:最后一次未达到备份时间段，会丢失该时间段之间的数据
+  保存文件:  .rdb
+  触发: 配置文件  save命令(全部阻塞,保存当前快照) bgsave命令(不阻塞保存当前快照) flushall命令(生成空的rdb文件,无意义)
+
+  如何恢复:将备份文件复制到redis安装目录,启动
+
+AOF(append only file)持久化
+保存redis所有的操作命令,只增不减，重新启动时会重新加载数据
+redis.conf 中配置 appendonly on 即可开启,默认关闭
+redis.conf 每秒:appendfsync=everysec  数据变更:appendfsync=always
+
+为了避免文件过大,redis重写机制:保留数据还原的最小操作命令集
+fork一条线程重写内存中的数据,不独去旧的aof文件
+
+若同时开启,恢复先aof.
