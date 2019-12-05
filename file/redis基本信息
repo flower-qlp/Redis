@@ -37,5 +37,11 @@ redis事务:
 2.在提交命令之前,命令都不会实际执行
 3.不存在原子性，其中一个失败,不会回滚,其他的命令继续执行
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        redisconfig中需要
+        重写redisTemplate的原因：系统自带的redistemplate的类型是<Object,Object>使用时不方便转换
 
 Jedis
