@@ -13,7 +13,7 @@ public class TestJedis {
     public static void main(String[] args) {
 
         //建立连接
-        Jedis client = new Jedis("127.0.0.1", 6379);
+        Jedis client = new Jedis("47.104.147.118", 6379);
 
         //测试联通信
         System.out.printf(client.ping());
