@@ -15,19 +15,23 @@ import java.util.stream.Stream;
 @Component
 public class RedisUtil {
 
-    private final  long DEFAULT_EXPIRE_TIME=24*60*60;
+    private final long DEFAULT_EXPIRE_TIME = 24 * 60 * 60;
 
-    private final long NOT_EXPIRE=-1;
+    private final long NOT_EXPIRE = -1;
 
     @Autowired
-    public static RedisTemplate<String, Object> redisTemplate;
+    public RedisTemplate<String, Object> redisTemplate;
 
     public void deleteKeys(String... keys) {
         Set<String> kSet = Stream.of(keys).map(x -> x).collect(Collectors.toSet());
         redisTemplate.delete(kSet);
     }
 
-    public void expireKey(String key, long time, TimeUnit timeUnit){
-         redisTemplate.expire(key,time,timeUnit);
+    public void expireKey(String key, long time, TimeUnit timeUnit) {
+        redisTemplate.expire(key, time, timeUnit);
+    }
+
+    public Boolean setNx(String key, String value) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value);
     }
 }

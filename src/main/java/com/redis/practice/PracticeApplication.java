@@ -2,12 +2,11 @@ package com.redis.practice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author itoutsource.cz10
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.redis.practice"})
 public class PracticeApplication {
 
     public static void main(String[] args) {
