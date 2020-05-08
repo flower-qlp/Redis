@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 @Service
 public class RedisService {
 
-
     @Resource
     private ValueOperations<String, Object> valueOperations;
 

@@ -15,7 +15,7 @@ import redis.clients.jedis.JedisPool;
 public class JedisService {
 
     @Autowired
-    private JedisPool jedisPool;
+    private JedisPool getJedisPool;
 
     /**
      * 获取对象
@@ -23,7 +23,7 @@ public class JedisService {
     public <T> T get(String key, Class<T> clazz) {
         Jedis jedis = null;
         try {
-            jedis = jedisPool.getResource();
+            jedis = getJedisPool.getResource();
             String str = jedis.get(key);
             return stringToBean(str, clazz);
         } finally {
@@ -37,7 +37,7 @@ public class JedisService {
     public <T> boolean set(String key, T value) {
         Jedis jedis = null;
         try {
-            jedis = jedisPool.getResource();
+            jedis = getJedisPool.getResource();
             if (StringUtils.isEmpty(key)) {
                 return false;
             }
@@ -54,7 +54,7 @@ public class JedisService {
     public boolean delete(String key) {
         Jedis jedis = null;
         try {
-            jedis = jedisPool.getResource();
+            jedis = getJedisPool.getResource();
             long ret = jedis.del(key);
             return ret > 0;
         } finally {
