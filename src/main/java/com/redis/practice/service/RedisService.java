@@ -25,7 +25,20 @@ public class RedisService {
             productNum -= 1;
             valueOperations.set(key, productNum);
         }
-
     }
+
+    public Object get(String key) {
+        return valueOperations.get(key);
+    }
+
+    public boolean incr(String key) {
+        try {
+            valueOperations.increment(key);
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
 
 }
