@@ -11,7 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author happy
- * redisson 加锁
+ * redisson 分布式加锁
+ * 分布式布隆过滤器
  */
 @Component
 public class RedissonLockUtil implements AbstractDistributedLocker {
@@ -70,6 +71,7 @@ public class RedissonLockUtil implements AbstractDistributedLocker {
         RBloomFilter<Object> bloomFilter = redissonClient.getBloomFilter(filterKey);
         Long expect = bloomFilter.getExpectedInsertions();
         if (null == expect || expect == 0) {
+            //预加载数据量 以及误差率
             bloomFilter.tryInit(5000000L, 0.03);
         }
         return bloomFilter;
